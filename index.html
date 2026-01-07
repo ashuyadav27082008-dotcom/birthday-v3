@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Riyuu 💖</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,system-ui}
+body{
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4,#fbc2eb,#a18cd1);
+  min-height:100vh;color:#fff;overflow-x:hidden
+}
+section{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  text-align:center
+}
+.hidden{display:none}
+button{
+  padding:12px 24px;
+  border:none;
+  border-radius:30px;
+  background:#fff;
+  color:#7b2ff7;
+  font-size:1rem;
+  font-weight:700;
+  margin-top:25px;
+}
+
+/* Loader */
+#countdown{font-size:2rem;margin-top:15px}
+
+/* Cake */
+#cake{
+  width:220px;height:150px;
+  background:#ff6f91;
+  border-radius:20px;
+  position:relative;
+  margin-top:30px
+}
+#cake::before{
+  content:"";
+  position:absolute;
+  top:-25px;left:0;right:0;
+  height:25px;
+  background:#ffd1dc;
+  border-radius:20px 20px 0 0
+}
+.candle{
+  width:12px;height:45px;
+  background:#fff;
+  position:absolute;
+  top:-60px;left:50%;
+  transform:translateX(-50%);
+  border-radius:6px
+}
+.flame{
+  width:16px;height:16px;
+  background:radial-gradient(circle,#ffd700,#ff6a00);
+  border-radius:50%;
+  position:absolute;
+  top:-16px;left:50%;
+  transform:translateX(-50%);
+  animation:flicker .2s infinite
+}
+@keyframes flicker{
+  50%{transform:translateX(-50%) scale(.85)}
+}
+
+/* Balloons */
+#balloonBox{position:relative;width:100%;height:70vh}
+.balloon{
+  position:absolute;
+  bottom:-80px;
+  width:50px;height:65px;
+  border-radius:25px 25px 35px 35px;
+  animation:float 7s linear infinite;
+  cursor:pointer
+}
+@keyframes float{
+  to{bottom:120%}
+}
+
+/* Carousel */
+.carousel{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  padding:20px;
+  scroll-snap-type:x mandatory
+}
+.photo{
+  min-width:220px;
+  height:300px;
+  background:#fff;
+  color:#333;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  scroll-snap-align:center
+}
+
+/* Flip card */
+.flip{
+  width:260px;height:180px;
+  perspective:900px
+}
+.flip-inner{
+  width:100%;height:100%;
+  transition:transform .8s;
+  transform-style:preserve-3d
+}
+.flip:hover .flip-inner{
+  transform:rotateY(180deg)
+}
+.face{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:16px;
+  backface-visibility:hidden;
+  padding:15px
+}
+.front{background:#fff;color:#7b2ff7;font-weight:800}
+.back{
+  background:#7b2ff7;
+  color:#fff;
+  transform:rotateY(180deg)
+}
+</style>
+</head>
+
+<body>
+
+<!-- Loader -->
+<section id="loader">
+  <h1>🎁 Riyuu ke liye surprise aa raha hai…</h1>
+  <div id="countdown"></div>
+</section>
+
+<!-- Cake -->
+<section id="cakeSec" class="hidden">
+  <h1>Happy Birthday Riyuu 💖</h1>
+  <p>19 January 🎂</p>
+  <div id="cake">
+    <div class="candle"><div class="flame"></div></div>
+  </div>
+  <button onclick="show('balloonSec')">Next 🎈</button>
+</section>
+
+<!-- Balloons -->
+<section id="balloonSec" class="hidden">
+  <h1>Pop the balloons 🎈</h1>
+  <div id="balloonBox"></div>
+</section>
+
+<!-- Photos -->
+<section id="photoSec" class="hidden">
+  <h1>Memories 📸</h1>
+  <div class="carousel">
+    <div class="photo">Photo 1</div>
+    <div class="photo">Photo 2</div>
+    <div class="photo">Photo 3</div>
+  </div>
+  <button onclick="show('msgSec')">Message 💌</button>
+</section>
+
+<!-- Message -->
+<section id="msgSec" class="hidden">
+  <h1>For You ❤️</h1>
+  <div class="flip">
+    <div class="flip-inner">
+      <div class="face front">Tap Me 💖</div>
+      <div class="face back">
+        Riyuu 💖<br><br>
+        Tum bhen jaisi ho,<br>
+        par meri life ki sabse cute person 😄<br><br>
+        Hamesha khush raho,<br>
+        haste raho, chamakte raho ✨<br><br>
+        Aur haan… cake mere bina mat kaatna 🎂😂
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Music -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/01/audio_56182d7d88.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* Countdown – 19 January */
+const target=new Date(new Date().getFullYear(),0,19);
+const c=document.getElementById("countdown");
+
+const timer=setInterval(()=>{
+  const diff=target-new Date();
+  if(diff<=0){
+    clearInterval(timer);
+    show("cakeSec");
+  }
+  c.innerText="Countdown: "+Math.max(0,Math.floor(diff/1000))+"s";
+},1000);
+
+/* Screen switch */
+function show(id){
+  document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+  if(id==="balloonSec") balloons();
+}
+
+/* Balloons logic */
+function balloons(){
+  const box=document.getElementById("balloonBox");
+  box.innerHTML="";
+  for(let i=0;i<12;i++){
+    const b=document.createElement("div");
+    b.className="balloon";
+    b.style.left=Math.random()*90+"%";
+    b.style.background=`hsl(${Math.random()*360},80%,65%)`;
+    b.onclick=()=>{
+      b.remove();
+      if(box.children.length===0) show("photoSec");
+    };
+    box.appendChild(b);
+  }
+}
+</script>
+
+</body>
+</html>
